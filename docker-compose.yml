@@ -1,0 +1,69 @@
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_DATABASE: ${DB_NAME:-event_management}
+    ports:
+      # Host port 3307 -> container 3306, to avoid clashing with a MySQL
+      # instance already running on the host. Containers still reach this
+      # service internally as "mysql:3306" regardless of this mapping.
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot", "-p${DB_PASSWORD:-password}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      APP_ENV: production
+      PORT: 8080
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+      DB_NAME: ${DB_NAME:-event_management}
+      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-long-random-string}
+      JWT_EXPIRY_HOURS: 72
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+      UPLOAD_DIR: /app/uploads
+      PAYMENT_DEADLINE_MINUTES: 120
+      MIDTRANS_SERVER_KEY: ${MIDTRANS_SERVER_KEY:-}
+      MIDTRANS_CLIENT_KEY: ${MIDTRANS_CLIENT_KEY:-}
+      MIDTRANS_IS_PRODUCTION: ${MIDTRANS_IS_PRODUCTION:-false}
+    ports:
+      # Host port 8081 -> container 8080, to avoid clashing with something
+      # already bound to 8080 on the host.
+      - "8081:8080"
+    volumes:
+      - uploads_data:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8080/api/v1}
+        NEXT_PUBLIC_UPLOADS_URL: ${NEXT_PUBLIC_UPLOADS_URL:-http://localhost:8080}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-change-this-to-a-long-random-string}
+      PORT: 3000
+    ports:
+      # Host port 3001 -> container 3000, to avoid clashing with something
+      # already bound to 3000 on the host.
+      - "3001:3000"
+
+volumes:
+  mysql_data:
+  uploads_data:

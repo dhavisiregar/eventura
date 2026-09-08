@@ -1,0 +1,5 @@
+uploads/
+*.md
+.env
+.env.*
+tmp/
