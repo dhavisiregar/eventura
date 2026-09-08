@@ -71,7 +71,7 @@ npm run dev                         # http://localhost:3000
 
 ## Deploying
 
-See [DEPLOY.md](DEPLOY.md) for a step-by-step guide to a free hosted setup: **Vercel** (frontend) + **Render** (backend, via the included `render.yaml`) + **PlanetScale** (MySQL-compatible database).
+See [DEPLOY.md](DEPLOY.md) for a step-by-step guide to a free hosted setup: **Vercel** (frontend) + **Render** (backend, via the included `render.yaml`) + **Aiven** (managed MySQL, free plan).
 
 ## Running tests
 

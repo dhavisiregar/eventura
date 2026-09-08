@@ -2,7 +2,7 @@
 # In the Render dashboard: New + > Blueprint > select this repo.
 # See DEPLOY.md for the full step-by-step (this only covers the backend;
 # the frontend deploys separately to Vercel, and the database is external
-# — e.g. PlanetScale — since Render has no managed MySQL).
+# — e.g. Aiven's free MySQL plan — since Render has no managed MySQL).
 services:
   - type: web
     name: eventura-backend
