@@ -1,0 +1,48 @@
+# Render Blueprint for the backend API.
+# In the Render dashboard: New + > Blueprint > select this repo.
+# See DEPLOY.md for the full step-by-step (this only covers the backend;
+# the frontend deploys separately to Vercel, and the database is external
+# — e.g. PlanetScale — since Render has no managed MySQL).
+services:
+  - type: web
+    name: eventura-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: PORT
+        value: 8080
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_SSL
+        value: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRY_HOURS
+        value: 72
+      # Set this to your Vercel frontend URL once it exists (see DEPLOY.md).
+      - key: FRONTEND_URL
+        sync: false
+      - key: UPLOAD_DIR
+        value: /app/uploads
+      - key: PAYMENT_DEADLINE_MINUTES
+        value: 120
+      - key: MIDTRANS_SERVER_KEY
+        sync: false
+      - key: MIDTRANS_CLIENT_KEY
+        sync: false
+      - key: MIDTRANS_IS_PRODUCTION
+        value: false

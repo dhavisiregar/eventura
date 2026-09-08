@@ -19,6 +19,10 @@ import (
 func Connect(cfg *config.Config) (*gorm.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName)
+	if cfg.DBSSL {
+		// Required by managed MySQL-compatible hosts like PlanetScale.
+		dsn += "&tls=true"
+	}
 
 	var db *gorm.DB
 	var err error
@@ -31,6 +35,10 @@ func Connect(cfg *config.Config) (*gorm.DB, error) {
 	for attempt := 1; attempt <= 15; attempt++ {
 		db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 			Logger: logger.Default.LogMode(logLevel),
+			// Vitess-based hosts (e.g. PlanetScale) don't support DB-level FK
+			// constraints; referential integrity here is enforced in application
+			// code (see internal/services), so this is safe everywhere.
+			DisableForeignKeyConstraintWhenMigrating: true,
 		})
 		if err == nil {
 			sqlDB, sqlErr := db.DB()

@@ -15,6 +15,7 @@ type Config struct {
 	DBUser          string
 	DBPassword      string
 	DBName          string
+	DBSSL           bool
 	JWTSecret       string
 	JWTExpiry       time.Duration
 	FrontendURL     string
@@ -52,6 +53,7 @@ func Load() *Config {
 		DBUser:          getEnv("DB_USER", "root"),
 		DBPassword:      getEnv("DB_PASSWORD", ""),
 		DBName:          getEnv("DB_NAME", "event_management"),
+		DBSSL:           getEnv("DB_SSL", "false") == "true",
 		JWTSecret:       getEnv("JWT_SECRET", "dev-secret-change-me"),
 		JWTExpiry:       time.Duration(jwtExpiryHours) * time.Hour,
 		FrontendURL:     getEnv("FRONTEND_URL", "http://localhost:3000"),
