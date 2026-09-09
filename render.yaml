@@ -19,8 +19,10 @@ services:
         value: 8080
       - key: DB_HOST
         sync: false
+      # Managed hosts like Aiven assign a random non-standard port per service — don't
+      # assume 3306, copy the real port from your provider's connection info.
       - key: DB_PORT
-        value: 3306
+        sync: false
       - key: DB_USER
         sync: false
       - key: DB_PASSWORD

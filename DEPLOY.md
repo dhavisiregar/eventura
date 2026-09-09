@@ -19,7 +19,7 @@ Do the steps **in this order**, since the backend and frontend each need to know
 1. Sign up free at https://render.com and connect your GitHub account.
 2. **New +** → **Blueprint** → select the `dhavisiregar/eventura` repo. Render will detect `render.yaml` at the repo root and propose one service: `eventura-backend`.
 3. Before clicking **Apply**, you'll be prompted for the env vars marked `sync: false` in the blueprint — fill in:
-   - `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` → from Aiven (step 1.3; `DB_NAME` is `defaultdb` unless you created your own)
+   - `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` → from Aiven (step 1.3; `DB_NAME` is `defaultdb` unless you created your own). **Don't assume `DB_PORT` is 3306** — Aiven assigns a random port per service (e.g. `10652`); use the exact `Port` value shown on your service's Overview tab.
    - `DB_SSL_CA` → the CA certificate you copied in step 1.4 (paste the full PEM block, including the `BEGIN`/`END` lines)
    - `MIDTRANS_SERVER_KEY`, `MIDTRANS_CLIENT_KEY` → from https://dashboard.sandbox.midtrans.com/settings/config_info
    - `FRONTEND_URL` → leave as a placeholder for now (e.g. `http://localhost:3000`); you'll update it in step 4
