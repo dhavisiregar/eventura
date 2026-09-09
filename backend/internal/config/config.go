@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -57,10 +58,13 @@ func Load() *Config {
 		DBSSL:      getEnv("DB_SSL", "false") == "true",
 		// Optional: PEM-encoded CA certificate content (not a file path) for hosts that sign
 		// with a private CA — e.g. Aiven. Leave unset for hosts with a publicly-trusted cert.
-		DBSSLCA:         getEnv("DB_SSL_CA", ""),
-		JWTSecret:       getEnv("JWT_SECRET", "dev-secret-change-me"),
-		JWTExpiry:       time.Duration(jwtExpiryHours) * time.Hour,
-		FrontendURL:     getEnv("FRONTEND_URL", "http://localhost:3000"),
+		DBSSLCA:   getEnv("DB_SSL_CA", ""),
+		JWTSecret: getEnv("JWT_SECRET", "dev-secret-change-me"),
+		JWTExpiry: time.Duration(jwtExpiryHours) * time.Hour,
+		// Trimmed of any trailing slash: browsers never send one in the Origin header, so a
+		// stray "/" here would make Access-Control-Allow-Origin fail to exactly match it and
+		// silently break CORS for every request.
+		FrontendURL:     strings.TrimRight(getEnv("FRONTEND_URL", "http://localhost:3000"), "/"),
 		UploadDir:       getEnv("UPLOAD_DIR", "./uploads"),
 		PaymentDeadline: time.Duration(paymentDeadlineMinutes) * time.Minute,
 
