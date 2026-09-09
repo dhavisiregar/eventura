@@ -73,11 +73,11 @@ export default function MyTicketsPage() {
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
       {dialog}
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-slate-900">My tickets</h1>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">My tickets</h1>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
         >
           <option value="">All statuses</option>
           <option value="pending_payment">Awaiting payment</option>
@@ -87,10 +87,10 @@ export default function MyTicketsPage() {
         </select>
       </div>
 
-      {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
+      {error && <p className="mb-4 text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       {loading ? (
-        <p className="text-sm text-slate-500">Loading…</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Loading…</p>
       ) : transactions.length === 0 ? (
         <EmptyState
           icon={Ticket}
@@ -110,12 +110,15 @@ export default function MyTicketsPage() {
                 <div>
                   <div className="mb-1 flex items-center gap-2">
                     <Badge tone={statusTone[tx.status]}>{statusLabel[tx.status]}</Badge>
-                    <span className="text-xs text-slate-400">#{tx.invoice_no}</span>
+                    <span className="text-xs text-slate-400 dark:text-slate-500">#{tx.invoice_no}</span>
                   </div>
-                  <Link href={`/events/${tx.event?.slug}`} className="font-semibold text-slate-900 hover:text-indigo-600">
+                  <Link
+                    href={`/events/${tx.event?.slug}`}
+                    className="font-semibold text-slate-900 hover:text-indigo-600 dark:text-slate-100 dark:hover:text-indigo-400"
+                  >
                     {tx.event?.title}
                   </Link>
-                  <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+                  <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
                     {tx.event && (
                       <>
                         <span className="flex items-center gap-1">
@@ -130,15 +133,15 @@ export default function MyTicketsPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-semibold text-slate-900">{formatIDR(tx.total_price)}</div>
+                  <div className="font-semibold text-slate-900 dark:text-slate-100">{formatIDR(tx.total_price)}</div>
                   {tx.status === "pending_payment" && (
-                    <div className="text-xs font-medium text-amber-600">{formatRelativeCountdown(tx.payment_deadline)}</div>
+                    <div className="text-xs font-medium text-amber-600 dark:text-amber-400">{formatRelativeCountdown(tx.payment_deadline)}</div>
                   )}
                 </div>
               </div>
 
               {tx.status === "pending_payment" && (
-                <div className="mt-3 flex gap-2 border-t border-slate-100 pt-3">
+                <div className="mt-3 flex gap-2 border-t border-slate-100 pt-3 dark:border-slate-800">
                   {tx.midtrans_redirect_url && (
                     <a href={tx.midtrans_redirect_url} target="_blank" rel="noreferrer">
                       <Button size="sm">Continue payment</Button>

@@ -28,7 +28,10 @@ export function StarRating({
           className={clsx(!readOnly && "cursor-pointer", readOnly && "cursor-default")}
         >
           <Star
-            className={clsx(sizes[size], star <= value ? "fill-amber-400 text-amber-400" : "fill-transparent text-slate-300")}
+            className={clsx(
+              sizes[size],
+              star <= value ? "fill-amber-400 text-amber-400" : "fill-transparent text-slate-300 dark:text-slate-600"
+            )}
           />
         </button>
       ))}

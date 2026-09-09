@@ -28,7 +28,9 @@ export default function OrganizerLayout({ children }: { children: React.ReactNod
                 href={item.href}
                 className={clsx(
                   "flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  active ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"
+                  active
+                    ? "bg-indigo-600 text-white dark:bg-indigo-500"
+                    : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                 )}
               >
                 <Icon className="h-4 w-4" />

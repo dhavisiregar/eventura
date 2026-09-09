@@ -74,12 +74,12 @@ export default function HomePage() {
 
   return (
     <div>
-      <section className="border-b border-slate-200 bg-linear-to-b from-indigo-50 to-slate-50">
+      <section className="border-b border-slate-200 bg-linear-to-b from-indigo-50 to-slate-50 dark:border-slate-800 dark:from-indigo-500/10 dark:to-slate-950">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
             Find your next unforgettable event
           </h1>
-          <p className="mt-3 max-w-2xl text-slate-600">
+          <p className="mt-3 max-w-2xl text-slate-600 dark:text-slate-400">
             Discover concerts, workshops, and conferences near you — and book tickets in minutes.
           </p>
           <div className="mt-6 max-w-xl">
@@ -89,8 +89,8 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center">
-          <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
+        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center dark:border-slate-800 dark:bg-slate-900">
+          <div className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
             <SlidersHorizontal className="h-4 w-4" /> Filters
           </div>
           <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4">
@@ -107,7 +107,7 @@ export default function HomePage() {
               placeholder="City"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+              className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-500/20"
             />
             <Select
               aria-label="Price"
@@ -130,7 +130,7 @@ export default function HomePage() {
         {loading ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="h-72 animate-pulse rounded-2xl bg-slate-100" />
+              <div key={i} className="h-72 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-800" />
             ))}
           </div>
         ) : error ? (

@@ -32,8 +32,8 @@ export default function EditEventPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-xl font-bold text-slate-900">Edit event</h1>
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      <h1 className="mb-6 text-xl font-bold text-slate-900 dark:text-slate-100">Edit event</h1>
+      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
       <Card className="max-w-2xl p-6">
         {event && categories.length > 0 && (
           <EventForm mode="edit" categories={categories} initial={event} onSubmit={handleSubmit} submitLabel="Save changes" />

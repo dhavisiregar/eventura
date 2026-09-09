@@ -117,9 +117,9 @@ export function EventForm({
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-5">
       <div>
-        <p className="mb-1.5 text-sm font-medium text-slate-700">Banner image</p>
+        <p className="mb-1.5 text-sm font-medium text-slate-700 dark:text-slate-300">Banner image</p>
         <div className="flex items-center gap-4">
-          <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg border border-dashed border-slate-300 bg-slate-50">
+          <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg border border-dashed border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-800">
             {bannerUrl && (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={resolveAssetUrl(bannerUrl) ?? ""} alt="Banner preview" className="h-full w-full object-cover" />
@@ -130,7 +130,7 @@ export function EventForm({
             <Button type="button" variant="outline" size="sm" loading={uploading} onClick={() => fileInputRef.current?.click()}>
               <Upload className="h-4 w-4" /> Upload image
             </Button>
-            <p className="mt-1 text-xs text-slate-400">JPG, PNG, or WebP. Max 5MB.</p>
+            <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">JPG, PNG, or WebP. Max 5MB.</p>
           </div>
         </div>
       </div>
@@ -186,7 +186,7 @@ export function EventForm({
         </Select>
       )}
 
-      <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+      <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
         <input type="checkbox" {...register("is_paid")} /> This is a paid event
       </label>
 
@@ -203,24 +203,27 @@ export function EventForm({
       {mode === "create" && (
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-sm font-medium text-slate-700">Ticket types (optional)</p>
+            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Ticket types (optional)</p>
             <Button type="button" size="sm" variant="outline" onClick={() => append({ name: "", price: 0, quota: 1 })}>
               <Plus className="h-3.5 w-3.5" /> Add type
             </Button>
           </div>
           {fields.length === 0 && (
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-400 dark:text-slate-500">
               No ticket types added — attendees will book at the base price above (or free, if unpaid).
             </p>
           )}
           <div className="flex flex-col gap-3">
             {fields.map((field, index) => (
-              <div key={field.id} className="grid grid-cols-1 gap-2 rounded-lg border border-slate-200 p-3 sm:grid-cols-[1fr_auto_auto_auto]">
+              <div
+                key={field.id}
+                className="grid grid-cols-1 gap-2 rounded-lg border border-slate-200 p-3 sm:grid-cols-[1fr_auto_auto_auto] dark:border-slate-800"
+              >
                 <Input placeholder="Name (e.g. VIP)" {...register(`ticket_types.${index}.name`, { required: true })} />
                 <Input type="number" placeholder="Price" min={0} className="sm:w-28" {...register(`ticket_types.${index}.price`, { min: 0 })} />
                 <Input type="number" placeholder="Quota" min={1} className="sm:w-24" {...register(`ticket_types.${index}.quota`, { min: 1 })} />
                 <Button type="button" variant="ghost" size="sm" onClick={() => remove(index)} aria-label="Remove ticket type">
-                  <Trash2 className="h-4 w-4 text-red-500" />
+                  <Trash2 className="h-4 w-4 text-red-500 dark:text-red-400" />
                 </Button>
               </div>
             ))}
@@ -228,7 +231,7 @@ export function EventForm({
         </div>
       )}
 
-      {serverError && <p className="text-sm text-red-600">{serverError}</p>}
+      {serverError && <p className="text-sm text-red-600 dark:text-red-400">{serverError}</p>}
 
       <Button type="submit" loading={isSubmitting} size="lg" className="mt-2 w-full sm:w-auto">
         {submitLabel}

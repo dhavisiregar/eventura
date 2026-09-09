@@ -97,15 +97,15 @@ export default function VouchersPage() {
       {dialog}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-slate-900">Vouchers</h1>
-          {event && <p className="text-sm text-slate-500">for {event.title}</p>}
+          <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">Vouchers</h1>
+          {event && <p className="text-sm text-slate-500 dark:text-slate-400">for {event.title}</p>}
         </div>
         <Button size="sm" onClick={() => setCreating((v) => !v)}>
           <Plus className="h-4 w-4" /> {creating ? "Cancel" : "New voucher"}
         </Button>
       </div>
 
-      {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
+      {error && <p className="mb-4 text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       {creating && (
         <Card className="mb-6 max-w-xl p-5">
@@ -153,16 +153,21 @@ export default function VouchersPage() {
             <Card key={v.id} className="flex items-center justify-between p-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <code className="text-sm font-semibold text-slate-900">{v.code}</code>
+                  <code className="text-sm font-semibold text-slate-900 dark:text-slate-100">{v.code}</code>
                   <Badge tone="indigo">
                     {v.discount_type === "percentage" ? `${v.discount_value}% off` : `${formatIDR(v.discount_value)} off`}
                   </Badge>
                 </div>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                   {v.used_count}/{v.quota} redeemed · Valid {formatDate(v.start_date)} – {formatDate(v.end_date)}
                 </p>
               </div>
-              <Button variant="ghost" size="sm" className="text-red-600 hover:bg-red-50" onClick={() => handleDelete(v)}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
+                onClick={() => handleDelete(v)}
+              >
                 <Trash2 className="h-4 w-4" />
               </Button>
             </Card>

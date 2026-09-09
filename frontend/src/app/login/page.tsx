@@ -43,9 +43,9 @@ function LoginForm() {
   return (
     <div className="mx-auto flex min-h-[80vh] max-w-md flex-col justify-center px-4 py-12">
       <div className="mb-8 flex flex-col items-center gap-2 text-center">
-        <CalendarRange className="h-8 w-8 text-indigo-600" />
-        <h1 className="text-2xl font-bold text-slate-900">Welcome back</h1>
-        <p className="text-sm text-slate-500">Log in to book tickets or manage your events.</p>
+        <CalendarRange className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Welcome back</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Log in to book tickets or manage your events.</p>
       </div>
 
       <Card className="p-6">
@@ -58,16 +58,16 @@ function LoginForm() {
             error={errors.password?.message}
             {...register("password")}
           />
-          {serverError && <p className="text-sm text-red-600">{serverError}</p>}
+          {serverError && <p className="text-sm text-red-600 dark:text-red-400">{serverError}</p>}
           <Button type="submit" loading={isSubmitting} className="mt-2 w-full">
             Log in
           </Button>
         </form>
       </Card>
 
-      <p className="mt-6 text-center text-sm text-slate-500">
+      <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
         Don&apos;t have an account?{" "}
-        <Link href="/register" className="font-medium text-indigo-600 hover:underline">
+        <Link href="/register" className="font-medium text-indigo-600 hover:underline dark:text-indigo-400">
           Sign up
         </Link>
       </p>

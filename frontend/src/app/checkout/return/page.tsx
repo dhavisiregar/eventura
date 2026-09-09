@@ -56,30 +56,30 @@ function ReturnContent() {
       <Card className="w-full p-8">
         {state === "checking" && (
           <>
-            <Loader2 className="mx-auto h-10 w-10 animate-spin text-indigo-500" />
-            <h1 className="mt-4 text-lg font-semibold text-slate-900">Confirming your payment…</h1>
-            <p className="mt-1 text-sm text-slate-500">Please wait a moment, this won&apos;t take long.</p>
+            <Loader2 className="mx-auto h-10 w-10 animate-spin text-indigo-500 dark:text-indigo-400" />
+            <h1 className="mt-4 text-lg font-semibold text-slate-900 dark:text-slate-100">Confirming your payment…</h1>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Please wait a moment, this won&apos;t take long.</p>
           </>
         )}
         {state === "success" && (
           <>
-            <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-500" />
-            <h1 className="mt-4 text-lg font-semibold text-slate-900">Payment confirmed!</h1>
-            <p className="mt-1 text-sm text-slate-500">Redirecting you to your tickets…</p>
+            <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-500 dark:text-emerald-400" />
+            <h1 className="mt-4 text-lg font-semibold text-slate-900 dark:text-slate-100">Payment confirmed!</h1>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Redirecting you to your tickets…</p>
           </>
         )}
         {state === "pending" && (
           <>
-            <Loader2 className="mx-auto h-10 w-10 animate-spin text-amber-500" />
-            <h1 className="mt-4 text-lg font-semibold text-slate-900">Payment still processing</h1>
-            <p className="mt-1 text-sm text-slate-500">We&apos;ll keep checking — redirecting you to your tickets…</p>
+            <Loader2 className="mx-auto h-10 w-10 animate-spin text-amber-500 dark:text-amber-400" />
+            <h1 className="mt-4 text-lg font-semibold text-slate-900 dark:text-slate-100">Payment still processing</h1>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">We&apos;ll keep checking — redirecting you to your tickets…</p>
           </>
         )}
         {state === "error" && (
           <>
-            <XCircle className="mx-auto h-10 w-10 text-red-500" />
-            <h1 className="mt-4 text-lg font-semibold text-slate-900">We couldn&apos;t confirm this payment</h1>
-            <p className="mt-1 text-sm text-slate-500">{message}</p>
+            <XCircle className="mx-auto h-10 w-10 text-red-500 dark:text-red-400" />
+            <h1 className="mt-4 text-lg font-semibold text-slate-900 dark:text-slate-100">We couldn&apos;t confirm this payment</h1>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{message}</p>
             <Link href="/my-tickets" className="mt-6 inline-block">
               <Button size="sm">Go to my tickets</Button>
             </Link>

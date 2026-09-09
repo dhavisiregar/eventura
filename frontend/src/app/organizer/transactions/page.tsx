@@ -43,7 +43,7 @@ export default function OrganizerTransactionsPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-slate-900">Transactions</h1>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">Transactions</h1>
         <Select
           value={status}
           onChange={(e) => {
@@ -61,10 +61,10 @@ export default function OrganizerTransactionsPage() {
         </Select>
       </div>
 
-      {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
+      {error && <p className="mb-4 text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       {loading ? (
-        <p className="text-sm text-slate-500">Loading…</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Loading…</p>
       ) : transactions.length === 0 ? (
         <EmptyState icon={Receipt} title="No transactions found" description="Try a different status filter." />
       ) : (
@@ -72,7 +72,7 @@ export default function OrganizerTransactionsPage() {
           <Card className="overflow-x-auto p-0">
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead>
-                <tr className="border-b border-slate-100 text-xs uppercase text-slate-400">
+                <tr className="border-b border-slate-100 text-xs uppercase text-slate-400 dark:border-slate-800 dark:text-slate-500">
                   <th className="px-4 py-3 font-medium">Invoice</th>
                   <th className="px-4 py-3 font-medium">Event</th>
                   <th className="px-4 py-3 font-medium">Buyer</th>
@@ -83,15 +83,15 @@ export default function OrganizerTransactionsPage() {
               </thead>
               <tbody>
                 {transactions.map((tx) => (
-                  <tr key={tx.id} className="border-b border-slate-50 last:border-0">
-                    <td className="px-4 py-3 font-mono text-xs text-slate-500">{tx.invoice_no}</td>
-                    <td className="px-4 py-3 text-slate-800">{tx.event?.title}</td>
-                    <td className="px-4 py-3 text-slate-600">{tx.user?.name}</td>
-                    <td className="px-4 py-3 font-medium text-slate-900">{formatIDR(tx.total_price)}</td>
+                  <tr key={tx.id} className="border-b border-slate-50 last:border-0 dark:border-slate-800/60">
+                    <td className="px-4 py-3 font-mono text-xs text-slate-500 dark:text-slate-400">{tx.invoice_no}</td>
+                    <td className="px-4 py-3 text-slate-800 dark:text-slate-200">{tx.event?.title}</td>
+                    <td className="px-4 py-3 text-slate-600 dark:text-slate-400">{tx.user?.name}</td>
+                    <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">{formatIDR(tx.total_price)}</td>
                     <td className="px-4 py-3">
                       <Badge tone={statusTone[tx.status]}>{tx.status.replace("_", " ")}</Badge>
                     </td>
-                    <td className="px-4 py-3 text-slate-500">{formatDateTime(tx.created_at)}</td>
+                    <td className="px-4 py-3 text-slate-500 dark:text-slate-400">{formatDateTime(tx.created_at)}</td>
                   </tr>
                 ))}
               </tbody>

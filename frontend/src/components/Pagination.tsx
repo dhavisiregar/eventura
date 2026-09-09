@@ -21,7 +21,7 @@ export function Pagination({
       <button
         onClick={() => onChange(page - 1)}
         disabled={page <= 1}
-        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
+        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800"
         aria-label="Previous page"
       >
         <ChevronLeft className="h-4 w-4" />
@@ -29,13 +29,15 @@ export function Pagination({
 
       {pages.map((p, idx) => (
         <span key={p} className="flex items-center">
-          {idx > 0 && pages[idx - 1] !== p - 1 && <span className="px-1 text-slate-400">…</span>}
+          {idx > 0 && pages[idx - 1] !== p - 1 && <span className="px-1 text-slate-400 dark:text-slate-600">…</span>}
           <button
             onClick={() => onChange(p)}
             aria-current={p === page ? "page" : undefined}
             className={clsx(
               "flex h-9 w-9 items-center justify-center rounded-lg text-sm font-medium",
-              p === page ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-50"
+              p === page
+                ? "bg-indigo-600 text-white dark:bg-indigo-500"
+                : "text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800"
             )}
           >
             {p}
@@ -46,7 +48,7 @@ export function Pagination({
       <button
         onClick={() => onChange(page + 1)}
         disabled={page >= totalPages}
-        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
+        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800"
         aria-label="Next page"
       >
         <ChevronRight className="h-4 w-4" />

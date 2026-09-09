@@ -65,7 +65,7 @@ export default function OrganizerEventsPage() {
     <div>
       {dialog}
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-slate-900">My events</h1>
+        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">My events</h1>
         <Link href="/organizer/events/new">
           <Button size="sm">
             <CalendarPlus className="h-4 w-4" /> Create event
@@ -73,10 +73,10 @@ export default function OrganizerEventsPage() {
         </Link>
       </div>
 
-      {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
+      {error && <p className="mb-4 text-sm text-red-600 dark:text-red-400">{error}</p>}
 
       {loading ? (
-        <p className="text-sm text-slate-500">Loading…</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Loading…</p>
       ) : events.length === 0 ? (
         <EmptyState
           title="No events yet"
@@ -98,16 +98,16 @@ export default function OrganizerEventsPage() {
                       <Badge tone={statusTone[event.status]}>{event.status}</Badge>
                       {event.category && <Badge tone="slate">{event.category.name}</Badge>}
                     </div>
-                    <p className="font-semibold text-slate-900">{event.title}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">{event.title}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       {formatDate(event.start_date)} · {event.city} · {event.available_seats}/{event.total_seats} seats left
                     </p>
                   </div>
-                  <div className="text-right font-semibold text-indigo-600">
+                  <div className="text-right font-semibold text-indigo-600 dark:text-indigo-400">
                     {event.is_paid ? formatIDR(event.price) : "Free"}
                   </div>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+                <div className="mt-3 flex flex-wrap gap-2 border-t border-slate-100 pt-3 dark:border-slate-800">
                   <Link href={`/organizer/events/${event.id}/edit`}>
                     <Button size="sm" variant="outline">
                       <PenSquare className="h-3.5 w-3.5" /> Edit
@@ -123,7 +123,12 @@ export default function OrganizerEventsPage() {
                       <Users className="h-3.5 w-3.5" /> Attendees
                     </Button>
                   </Link>
-                  <Button size="sm" variant="ghost" className="text-red-600 hover:bg-red-50" onClick={() => handleDelete(event)}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
+                    onClick={() => handleDelete(event)}
+                  >
                     <Trash2 className="h-3.5 w-3.5" /> Delete
                   </Button>
                 </div>

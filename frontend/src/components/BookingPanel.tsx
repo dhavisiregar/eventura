@@ -84,19 +84,19 @@ export function BookingPanel({ event }: { event: EventItem }) {
 
   if (eventEnded) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-500">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
         This event has already ended.
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
       <div className="flex items-center justify-between">
-        <span className="text-2xl font-bold text-slate-900">
+        <span className="text-2xl font-bold text-slate-900 dark:text-slate-100">
           {unitPrice > 0 ? formatIDR(unitPrice) : "Free"}
         </span>
-        {event.is_paid && <span className="text-xs text-slate-500">per ticket</span>}
+        {event.is_paid && <span className="text-xs text-slate-500 dark:text-slate-400">per ticket</span>}
       </div>
 
       <div className="mt-4 flex flex-col gap-3">
@@ -134,9 +134,9 @@ export function BookingPanel({ event }: { event: EventItem }) {
             />
 
             {availableCoupon && (
-              <label className="flex items-center gap-2 text-sm text-slate-700">
+              <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                 <input type="checkbox" checked={useCoupon} onChange={(e) => setUseCoupon(e.target.checked)} />
-                <Tag className="h-3.5 w-3.5 text-indigo-500" />
+                <Tag className="h-3.5 w-3.5 text-indigo-500 dark:text-indigo-400" />
                 Use my {availableCoupon.discount_value}% referral coupon
               </label>
             )}
@@ -156,30 +156,30 @@ export function BookingPanel({ event }: { event: EventItem }) {
           </>
         )}
 
-        <div className="mt-2 space-y-1 border-t border-dashed border-slate-200 pt-3 text-sm">
-          <div className="flex justify-between text-slate-500">
+        <div className="mt-2 space-y-1 border-t border-dashed border-slate-200 pt-3 text-sm dark:border-slate-800">
+          <div className="flex justify-between text-slate-500 dark:text-slate-400">
             <span>Subtotal</span>
             <span>{formatIDR(subtotal)}</span>
           </div>
           {couponDiscount > 0 && (
-            <div className="flex justify-between text-emerald-600">
+            <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
               <span>Coupon discount</span>
               <span>-{formatIDR(couponDiscount)}</span>
             </div>
           )}
           {pointsDiscount > 0 && (
-            <div className="flex justify-between text-emerald-600">
+            <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
               <span>Points redeemed</span>
               <span>-{formatIDR(pointsDiscount)}</span>
             </div>
           )}
-          <div className="flex justify-between pt-1 text-base font-semibold text-slate-900">
+          <div className="flex justify-between pt-1 text-base font-semibold text-slate-900 dark:text-slate-100">
             <span>Total</span>
             <span>{formatIDR(estimatedTotal)}</span>
           </div>
         </div>
 
-        {error && <p className="text-xs text-red-600">{error}</p>}
+        {error && <p className="text-xs text-red-600 dark:text-red-400">{error}</p>}
 
         <Button
           onClick={handleBook}
@@ -191,7 +191,7 @@ export function BookingPanel({ event }: { event: EventItem }) {
           <TicketIcon className="h-4 w-4" />
           {soldOut ? "Sold out" : user?.role === "organizer" ? "Organizers can't book tickets" : "Book now"}
         </Button>
-        {!user && <p className="text-center text-xs text-slate-500">You&apos;ll be asked to log in first.</p>}
+        {!user && <p className="text-center text-xs text-slate-500 dark:text-slate-400">You&apos;ll be asked to log in first.</p>}
       </div>
     </div>
   );

@@ -55,11 +55,11 @@ export default function ReviewsPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      <h1 className="mb-2 text-xl font-bold text-slate-900">Rate your events</h1>
-      <p className="mb-6 text-sm text-slate-500">Share feedback for events you&apos;ve attended.</p>
+      <h1 className="mb-2 text-xl font-bold text-slate-900 dark:text-slate-100">Rate your events</h1>
+      <p className="mb-6 text-sm text-slate-500 dark:text-slate-400">Share feedback for events you&apos;ve attended.</p>
 
       {loading ? (
-        <p className="text-sm text-slate-500">Loading…</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Loading…</p>
       ) : pending.length === 0 ? (
         <EmptyState icon={MessageSquareText} title="Nothing to review" description="You have no completed events waiting for a review." />
       ) : (
@@ -68,8 +68,8 @@ export default function ReviewsPage() {
             <Card key={tx.id} className="p-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-semibold text-slate-900">{tx.event?.title}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">{tx.event?.title}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Attended {tx.event ? formatDate(tx.event.end_date) : ""} · {tx.quantity} ticket(s)
                   </p>
                 </div>
@@ -81,14 +81,14 @@ export default function ReviewsPage() {
               </div>
 
               {activeTx === tx.id && (
-                <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4">
+                <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 dark:border-slate-800">
                   <StarRating value={rating} onChange={setRating} size="lg" />
                   <Textarea
                     placeholder="How was the event? Any suggestions for improvement?"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                   />
-                  {error && <p className="text-xs text-red-600">{error}</p>}
+                  {error && <p className="text-xs text-red-600 dark:text-red-400">{error}</p>}
                   <div className="flex justify-end gap-2">
                     <Button variant="ghost" size="sm" onClick={() => setActiveTx(null)}>
                       Cancel

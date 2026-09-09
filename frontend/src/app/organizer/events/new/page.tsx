@@ -22,7 +22,7 @@ export default function CreateEventPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-xl font-bold text-slate-900">Create event</h1>
+      <h1 className="mb-6 text-xl font-bold text-slate-900 dark:text-slate-100">Create event</h1>
       <Card className="max-w-2xl p-6">
         {categories.length > 0 && (
           <EventForm mode="create" categories={categories} onSubmit={handleSubmit} submitLabel="Publish event" />

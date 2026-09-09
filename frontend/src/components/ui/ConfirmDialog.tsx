@@ -36,10 +36,10 @@ export function useConfirmDialog() {
   }, []);
 
   const dialog = state.open ? (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4" role="dialog" aria-modal="true">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
-        <h2 className="text-base font-semibold text-slate-900">{state.title}</h2>
-        {state.description && <p className="mt-2 text-sm text-slate-600">{state.description}</p>}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 dark:bg-black/70" role="dialog" aria-modal="true">
+      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+        <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100">{state.title}</h2>
+        {state.description && <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{state.description}</p>}
         <div className="mt-6 flex justify-end gap-3">
           <Button variant="outline" size="sm" onClick={() => close(false)}>
             {state.cancelLabel ?? "Cancel"}
