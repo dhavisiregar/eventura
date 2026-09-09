@@ -16,6 +16,7 @@ type Config struct {
 	DBPassword      string
 	DBName          string
 	DBSSL           bool
+	DBSSLCA         string
 	JWTSecret       string
 	JWTExpiry       time.Duration
 	FrontendURL     string
@@ -46,14 +47,17 @@ func Load() *Config {
 	}
 
 	return &Config{
-		AppEnv:          getEnv("APP_ENV", "development"),
-		Port:            getEnv("PORT", "8080"),
-		DBHost:          getEnv("DB_HOST", "127.0.0.1"),
-		DBPort:          getEnv("DB_PORT", "3306"),
-		DBUser:          getEnv("DB_USER", "root"),
-		DBPassword:      getEnv("DB_PASSWORD", ""),
-		DBName:          getEnv("DB_NAME", "event_management"),
-		DBSSL:           getEnv("DB_SSL", "false") == "true",
+		AppEnv:     getEnv("APP_ENV", "development"),
+		Port:       getEnv("PORT", "8080"),
+		DBHost:     getEnv("DB_HOST", "127.0.0.1"),
+		DBPort:     getEnv("DB_PORT", "3306"),
+		DBUser:     getEnv("DB_USER", "root"),
+		DBPassword: getEnv("DB_PASSWORD", ""),
+		DBName:     getEnv("DB_NAME", "event_management"),
+		DBSSL:      getEnv("DB_SSL", "false") == "true",
+		// Optional: PEM-encoded CA certificate content (not a file path) for hosts that sign
+		// with a private CA — e.g. Aiven. Leave unset for hosts with a publicly-trusted cert.
+		DBSSLCA:         getEnv("DB_SSL_CA", ""),
 		JWTSecret:       getEnv("JWT_SECRET", "dev-secret-change-me"),
 		JWTExpiry:       time.Duration(jwtExpiryHours) * time.Hour,
 		FrontendURL:     getEnv("FRONTEND_URL", "http://localhost:3000"),

@@ -1,6 +1,8 @@
 package database
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
 	"log"
 	"time"
@@ -8,10 +10,27 @@ import (
 	"eventman/backend/internal/config"
 	"eventman/backend/internal/models"
 
+	mysqldriver "github.com/go-sql-driver/mysql"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
+
+// tlsConfigName is registered with the mysql driver when DBSSLCA is set, so the DSN
+// can reference it via tls=<name> instead of the driver's built-in "true" mode (which
+// verifies against the system trust store — useless for a host signing with its own
+// private CA, e.g. Aiven).
+const tlsConfigName = "eventura-pinned-ca"
+
+// registerPinnedCA loads a PEM-encoded CA certificate (content, not a file path) and
+// registers it as a named TLS config so the DSN can opt into it.
+func registerPinnedCA(pemContent string) error {
+	pool := x509.NewCertPool()
+	if ok := pool.AppendCertsFromPEM([]byte(pemContent)); !ok {
+		return fmt.Errorf("no valid certificates found in DB_SSL_CA")
+	}
+	return mysqldriver.RegisterTLSConfig(tlsConfigName, &tls.Config{RootCAs: pool})
+}
 
 // Connect opens a MySQL connection with retries (useful when the DB
 // container is still starting up under docker-compose) and runs
@@ -20,8 +39,18 @@ func Connect(cfg *config.Config) (*gorm.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName)
 	if cfg.DBSSL {
-		// Required by managed MySQL-compatible hosts like PlanetScale.
-		dsn += "&tls=true"
+		if cfg.DBSSLCA != "" {
+			// Host signs with a private CA (e.g. Aiven) — pin it instead of relying on
+			// the system trust store, which would otherwise reject the chain.
+			if err := registerPinnedCA(cfg.DBSSLCA); err != nil {
+				return nil, fmt.Errorf("registering DB_SSL_CA: %w", err)
+			}
+			dsn += "&tls=" + tlsConfigName
+		} else {
+			// Host has a publicly-trusted cert (or accepts opportunistic TLS) — the
+			// driver's built-in mode verifies against the system trust store.
+			dsn += "&tls=true"
+		}
 	}
 
 	var db *gorm.DB

@@ -29,6 +29,12 @@ services:
         sync: false
       - key: DB_SSL
         value: true
+      # Required for Aiven: it signs certs with its own project CA, not a publicly-trusted
+      # one, so the default tls=true verification mode rejects it. Paste the PEM content of
+      # Aiven's "CA certificate" (Overview → Connection information) as this value — see
+      # DEPLOY.md. Leave empty for hosts with a publicly-trusted cert (or no TLS at all).
+      - key: DB_SSL_CA
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRY_HOURS
